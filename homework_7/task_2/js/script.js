@@ -17,22 +17,17 @@ class Game {
   }
 
   registerEvents() {
-
-    let index = 0;
-    const that = this;
-    document.onkeypress = function(event) {
-      const symbol = document.body.querySelectorAll(".symbol");
-      let arr = Array.from(symbol);
-      if (arr[index].textContent == event.key.toLowerCase()) {
-        index += 1;
-        that.success();
-        if (index  == (arr.length)){
-          index = 0;
-        }
-      } else {
-        that.fail()
+    document.addEventListener('keydown', () => {
+      let symbol = this.currentSymbol;
+      let inputedSymbol = String.fromCharCode(event.keyCode)
+      if (symbol.textContent.toUpperCase() === inputedSymbol) {
+        this.success();
       }
-    }
+      else {
+        this.fail();
+      }
+    });
+
   }
 
   success() {
@@ -50,7 +45,7 @@ class Game {
   }
 
   fail() {
-    if (++this.lossElement.textContent === 4) {
+    if (++this.lossElement.textContent === 5) {
       alert('Вы проиграли!');
       this.reset();
     }
@@ -65,19 +60,20 @@ class Game {
 
   getWord() {
     const words = [
-      'bob',
-      'awesome',
-      'netology',
-      'hello',
-      'kitty',
-      'rock',
-      'youtube',
-      'popcorn',
-      'cinema',
-      'love',
-      'javascript'
-    ],
+        'bob',
+        'awesome',
+        'netology',
+        'hello',
+        'kitty',
+        'rock',
+        'youtube',
+        'popcorn',
+        'cinema',
+        'love',
+        'javascript'
+      ],
       index = Math.floor(Math.random() * words.length);
+
     return words[index];
   }
 
@@ -85,7 +81,7 @@ class Game {
     const html = [...word]
       .map(
         (s, i) =>
-          `<span class="symbol ${i === 0 ? 'symbol_current' : ''}">${s}</span>`
+          `<span class="symbol ${i === 0 ? 'symbol_current': ''}">${s}</span>`
       )
       .join('');
     this.wordElement.innerHTML = html;
