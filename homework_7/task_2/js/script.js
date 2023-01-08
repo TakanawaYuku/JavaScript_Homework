@@ -17,16 +17,16 @@ class Game {
   }
 
   registerEvents() {
-    document.addEventListener('keydown', () => {
-      let symbol = this.currentSymbol;
-      let inputedSymbol = String.fromCharCode(event.keyCode)
-      if (symbol.textContent.toUpperCase() === inputedSymbol) {
-        this.success();
-      }
-      else {
-        this.fail();
-      }
-    });
+		  document.addEventListener('keyup',(event) => {
+			if (String.fromCharCode(event.keyCode) == this.currentSymbol.textContent.toUpperCase()){
+				this.success();
+			}
+			else
+			{
+				this.fail();
+			}
+		  });
+
 
   }
 
@@ -90,4 +90,4 @@ class Game {
   }
 }
 
-new Game(document.getElementById('game'))
+new Game(document.getElementById('game'));
